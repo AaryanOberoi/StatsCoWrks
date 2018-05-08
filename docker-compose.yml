@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  
+    mongodb:
+        labels:
+          NAME: "mongodb"
+        image: mongo:latest
+        container_name: "mongodb"
+        volumes:
+          - ../mongodb:/data/db
+        ports:
+            - 27017:27017
+
+    rabbit:
+        image: "rabbitmq:latest"
+        hostname: "rabbit1"
+        environment:
+          RABBITMQ_DEFAULT_USER: "rabbitmq"
+          RABBITMQ_DEFAULT_PASS: "rabbitmq"
+          RABBITMQ_DEFAULT_VHOST: "/"
+        container_name: "rabbit"
+        ports:
+          - "15672:15672"
+          - "5672:5672"
+        labels:
+          NAME: "rabbitmq1"
+        
