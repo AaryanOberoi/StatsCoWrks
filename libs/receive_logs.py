@@ -16,9 +16,12 @@ channel.exchange_declare(exchange='User1', exchange_type='fanout')
 channel.exchange_declare(exchange='User2', exchange_type='fanout')
 
 channel.queue_declare(queue='Device1', exclusive=True)
+channel.queue_declare(queue='Device2', exclusive=True)
+channel.queue_declare(queue='Device3', exclusive=True)
 
 channel.queue_bind(exchange='User1', queue='Device1')
-# channel.queue_bind(exchange='User2', queue='Device2')
+channel.queue_bind(exchange='User2', queue='Device2')
+channel.queue_bind(exchange='User2', queue='Device3')
 print(' [*] Waiting for logs. To exit press CTRL+C')
 
 

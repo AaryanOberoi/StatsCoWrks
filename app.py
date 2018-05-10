@@ -1,7 +1,7 @@
 import falcon
+import json
 from pymongo import MongoClient
 from libs.users import getUsers
-from libs.upload import uploadCount
 client = MongoClient()
 db = client.test_database
 
@@ -10,15 +10,16 @@ class Resource:
     def on_get(self, req, resp):
         """Handles GET requests"""
         try:
-            active_users = getUsers()
-            return
-        except Exception as e:
-            raise e
 
-    def on_post(self, req, resp):
-        try:
-            # CRON GOES HERE
-            uploadCount()
+            activity = getUsers()
+            present_data = {
+                'dev': activity[0],
+                'user': activity[1],
+                'epoch': activity[2]
+            }
+            resp.body = json.dumps(present_data)
+            print('resp body', resp.body)
+            resp.status = falcon.HTTP_200  # This is the default status
         except Exception as e:
             raise e
 
